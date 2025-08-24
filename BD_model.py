@@ -1,10 +1,29 @@
 # Librerías
-import sqlite3
+import mysql.connector
 
-# Crear (o conectar) base de datos
-conexion = sqlite3.connect("DB.db")
+# Conexión
+try:
+    conexion = mysql.connector.connect(
+    host="127.0.0.1",
+    user="Hellish",           # tu usuario
+    password="xxx333xxx",
+    database="tarea1bds2"
+)
+except mysql.connector.Error as err:
+    print("Error: ", err)
+    exit()
 
-# Cerrar la conexión
-conexion.close()
+# Cursor para ejecutar procedimientos
+cursor = conexion.cursor()
 
-# SQL
+# Llamar al procedure sin parámetros
+
+print("Llamando al procedure MostrarEmpleados: ")
+cursor.callproc("MostrarEmpleados", ())
+
+# Iterar resultados
+for result in cursor.stored_results():  # <- con paréntesis
+    for fila in result.fetchall():
+        print(fila)
+
+
