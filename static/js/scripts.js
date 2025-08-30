@@ -76,41 +76,102 @@ function mostrarEmpleadosGrid() {
         });
 }
 
+// Función para validar el formulario
+function validarFormulario(nombre, salario) {
+    // Validar que el nombre no esté vacío
+    if (!nombre || nombre.trim() === '') {
+        alert('Error 50001: Por favor ingrese el nombre del empleado');
+        return { isValid: false };
+    }
+
+    // Validar que el salario no esté vacío
+    if (!salario || salario.trim() === '') {
+        alert('Error 50002: Por favor ingrese el salario del empleado');
+        return { isValid: false };
+    }
+
+    // Validar que el salario sea un número válido (acepta decimales con punto o coma)
+    const salarioNum = parseFloat(salario.replace(',', '.'));
+    if (isNaN(salarioNum) || salarioNum <= 0) {
+        alert('Error 50003: Por favor ingrese un valor numérico válido para el salario (ej: 500000 o 500000.50)');
+        return { isValid: false };
+    }
+
+    return { 
+        isValid: true,
+        nombre: nombre.trim(),
+        salario: salarioNum
+    };
+}
+
 // Función para agregar empleado
 function agregarEmpleado() {
-
     // Obtener los valores del formulario
     const nombre = document.getElementById('nombre_input').value;
-    const salario = document.getElementById('salario_input').value;
+    const salarioInput = document.getElementById('salario_input');
+    const salario = salarioInput.value;
     
+    // Validar el formulario antes de enviar
+    const validacion = validarFormulario(nombre, salario);
+    if (!validacion.isValid) {
+        return; // Detener la ejecución si la validación falla
+    }
+
+    // Usar los valores ya validados y formateados
+    const { nombre: nombreValidado, salario: salarioValidado } = validacion;
+    const salarioNum = parseFloat(salarioValidado).toFixed(2);
+
     // Petición POST para agregar un nuevo empleado
     fetch('/agregar-empleado', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'  // Indicar que el contenido es JSON
         },
-        body: JSON.stringify({ nombre, salario })
+        body: JSON.stringify({ 
+            nombre: nombreValidado, 
+            salario: salarioNum 
+        })
     })
     .then(response => {
-        response.json();
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
         mostrarEmpleadosGrid();
+        
+        // Mantener el modal abierto
+        // Limpiar solo el campo de nombre para facilitar la inserción de múltiples empleados
+        document.getElementById('nombre_input').value = '';
+        document.getElementById('salario_input').value = '';
+
+        // Enfocar el campo de nombre para la siguiente entrada
+        document.getElementById('nombre_input').focus();
     })
     .catch(error => {
         console.error('Error al agregar empleado:', error);
+        alert('Error 50004: Error al agregar empleado: ' + error.message);
     });
 }
 
 // Cerrar el modal al hacer clic en el botón Regresar
-document.getElementById('regresar-modal').addEventListener('click', (e) => {
-    e.preventDefault();  // Prevenir el envío normal del formulario (recargar la página)
-    document.getElementById('modal-agregar').style.display = 'none';
-});
+const regresarBtn = document.getElementById('regresar-modal');
+if (regresarBtn) {
+    regresarBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('modal-agregar').style.display = 'none';
+    });
+}
 
 // Manejar el envío del formulario
-document.getElementById('form-insertar').addEventListener('submit', function(e) {
-    e.preventDefault();  // Prevenir el envío normal del formulario (recargar la página) 
-    agregarEmpleado();
-});
+const formInsertar = document.getElementById('form-insertar');
+if (formInsertar) {
+    formInsertar.addEventListener('submit', function(e) {
+        e.preventDefault();
+        agregarEmpleado();
+    });
+}
 
 // Cerrar el modal al hacer clic fuera del contenido
 document.getElementById('modal-agregar').addEventListener('click', function(e) {
@@ -120,9 +181,13 @@ document.getElementById('modal-agregar').addEventListener('click', function(e) {
 });
 
 // Evento para abrir el modal
-document.getElementById('agregar-empleado').addEventListener('click', () => {
-    document.getElementById('modal-agregar').style.display = 'block';
-});
+const agregarBtn = document.getElementById('agregar-empleado');
+if (agregarBtn) {
+    agregarBtn.addEventListener('click', () => {
+        const modal = document.getElementById('modal-agregar');
+        if (modal) modal.style.display = 'block';
+    });
+}
 
 // Evento para mostrar empleados al cargar la página
 document.addEventListener('DOMContentLoaded', function() {

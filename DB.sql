@@ -35,7 +35,16 @@ DELIMITER ;
 -- Verificar procedures
 -- SHOW PROCEDURE STATUS WHERE Db = 'Tarea1BDS2';
 
+-- DELETE FROM empleados WHERE id = 43;
+
 -- CALL MostrarEmpleados();
+
+-- SELECT COUNT(*) AS total_filas FROM empleados;
+
+
+
+
+
 
 
 

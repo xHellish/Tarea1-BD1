@@ -18,7 +18,7 @@
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre_input" name="nombre">
                 <label for="salario">Salario:</label>
-                <input type="number" id="salario_input" name="salario">
+                <input type="text" inputmode="decimal" id="salario_input" name="salario" pattern="[0-9]+([\.,]\d{1,2})?" title="Ingrese un número válido (ej: 10000 o 10000.50)">
                 <button id="insertar-modal">Insertar</button>
                 <button id="regresar-modal">Regresar</button>
             </form>
