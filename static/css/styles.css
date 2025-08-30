@@ -1,0 +1,110 @@
+
+body {
+    background-color: #7d6ba8;
+}
+
+#lista-empleados {
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 700px;
+    width: 1000px;
+    background-color: #c4c4c4d8;
+}
+
+#agregar-empleado {
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 50px;
+    width: 100px;
+    background-color: #c4c4c4d8;
+}
+
+/* Estilos para la tabla de empleados */
+#lista-empleados {
+    width: 100%;
+    max-width: 800px;
+    max-height: 500px;
+    margin: 0 auto;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#lista-empleados .contenedor-tabla {
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+/* Estilos de la tabla y filas */
+.empleado-header,
+.empleado-fila {
+    display: grid;
+    grid-template-columns: 80px 2fr 1fr;
+    padding: 0.75rem 1rem;
+    align-items: center;
+}
+
+.empleado-header {
+    font-weight: bold;
+    background-color: #f1f3f5;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.empleado-fila {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.empleado-fila:last-child {
+    border-bottom: none;
+}
+
+/* Estilos de celdas */
+.empleado-id {
+    color: #525252;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.empleado-nombre {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2d3748;
+    padding: 0.5rem;
+}
+
+.empleado-salario {
+    font-size: 1rem;
+    color: #4a5568;
+    padding: 0.5rem;
+}
+
+/* Estilos para el modal */
+#modal-agregar {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+#regresar-modal {
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 50px;
+    width: 100px;
+    background-color: #c4c4c4d8;
+}

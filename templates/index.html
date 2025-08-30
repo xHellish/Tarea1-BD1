@@ -7,8 +7,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Aplicación Flask</h1>
-    <p>First commit. Hola mundo</p>
+    <h1>Lista de empleados</h1>
+    <div id="lista-empleados"></div>
+    <button id="agregar-empleado">Insertar</button>
+
+    <div id="modal-agregar">
+        <div class="modal-content">
+            <h2>Insertar Empleado</h2>
+            <form id="form-insertar">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre_input" name="nombre">
+                <label for="salario">Salario:</label>
+                <input type="number" id="salario_input" name="salario">
+                <button id="insertar-modal">Insertar</button>
+                <button id="regresar-modal">Regresar</button>
+            </form>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>  
 </body>
 </html>

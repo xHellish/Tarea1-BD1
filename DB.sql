@@ -1,10 +1,12 @@
 
 -- Crear tabla empleados si no existe
 CREATE TABLE IF NOT EXISTS empleados (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(64),
-    salario INT
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(128) NOT NULL,
+    salario DECIMAL(10,2) NOT NULL
 );
+
+-- DROP TABLE IF EXISTS empleado;
 
 -- Cambiar delimitador para crear procedures
 DELIMITER $$
@@ -19,8 +21,8 @@ END$$
 -- Procedure para agregar empleado
 DROP PROCEDURE IF EXISTS AgregarEmpleado$$
 CREATE PROCEDURE AgregarEmpleado(
-    IN p_nombre VARCHAR(64),
-    IN p_salario INT
+    IN p_nombre VARCHAR(128),
+    IN p_salario DECIMAL(10,2)
 )
 BEGIN
     INSERT INTO empleados (nombre, salario)
